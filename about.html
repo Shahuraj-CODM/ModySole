@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ModySOLE | About Us — Our Story</title>
+  <meta name="description"
+    content="Meet the team behind ModySOLE — India's first modular footwear startup from Chh.Sambhajinagar, Maharashtra.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+
+<body>
+  <header id="main-header">
+    <a href="index.html" class="logo">Mody<span>SOLE</span></a>
+    <nav>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="shop.html" class="nav-link">Shop</a>
+      <a href="customizer.html" class="nav-link">3D Studio</a>
+      <a href="about.html" class="nav-link active">About</a>
+      <a href="cart.html" class="nav-link">Cart</a>
+    </nav>
+    <div class="header-right">
+      <button class="cart-btn" onclick="toggleCart()">
+        <i class="fas fa-shopping-bag"></i> Cart (<span id="cart-count">0</span>)
+      </button>
+      <button class="login-btn" onclick="showLogin()">Login</button>
+    </div>
+  </header>
+
+  <!-- About Hero -->
+  <section class="about-hero">
+    <div style="max-width:800px">
+      <div class="section-label">Our Story</div>
+      <h1 class="section-title" style="font-size:clamp(3rem,7vw,6rem)">
+        Built for<br><span>Every Step</span>
+      </h1>
+      <p style="font-size:1.2rem;color:rgba(255,255,255,0.6);margin-top:1.5rem;max-width:600px;line-height:1.8">
+        ModySOLE was born from a simple realization: we buy 4–5 pairs of shoes a year and wear each one barely 20% of
+        the time.
+        We set out to fix that — with one base, infinite possibilities.
+      </p>
+    </div>
+  </section>
+
+  <!-- Mission -->
+  <section>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;flex-wrap:wrap">
+      <div>
+        <div class="section-label">Our Mission</div>
+        <h2 class="section-title">Why We <span>Exist</span></h2>
+        <p style="color:rgba(255,255,255,0.6);line-height:1.9;margin-top:1rem">
+          Every year, 400 million pairs of shoes are discarded in India. We believe the future of footwear is modular.
+          One premium base. Interchangeable, snap-lock soles. Covering every terrain, every activity, every occasion.
+        </p>
+        <p style="color:rgba(255,255,255,0.6);line-height:1.9;margin-top:1rem">
+          Whether you're sprinting on a track, navigating city streets, or climbing a summit — ModySOLE moves with you.
+          Modular, performance-driven, and unapologetically bold.
+        </p>
+        <div style="display:flex;gap:2rem;margin-top:2.5rem;flex-wrap:wrap">
+          <div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--cyan)">70%</div>
+            <div style="font-size:0.85rem;color:rgba(255,255,255,0.5)">Less Sole Waste</div>
+          </div>
+          <div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--primary)">₹10K+</div>
+            <div style="font-size:0.85rem;color:rgba(255,255,255,0.5)">Saved Per Customer/Year</div>
+          </div>
+          <div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--orange)">3s</div>
+            <div style="font-size:0.85rem;color:rgba(255,255,255,0.5)">Sole Swap Time</div>
+          </div>
+        </div>
+      </div>
+      <div
+        style="background:var(--glass);border:1px solid var(--glass-border);border-radius:24px;padding:3rem;text-align:center">
+        <div style="font-size:5rem;margin-bottom:1rem">👟</div>
+        <h3 style="font-size:1.5rem;margin-bottom:1rem">The Snap-Lock Promise</h3>
+        <p style="color:rgba(255,255,255,0.6);font-size:0.9rem;line-height:1.8">
+          Our patented magnetic snap-lock mechanism lets you swap soles in 3 seconds — no tools, no fuss.
+          Sports grip in the morning. Formal sole for the board meeting. Trekking grip for the weekend trail.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section>
+    <div class="section-label">The Founders</div>
+    <h2 class="section-title">Meet Our <span>Creators</span></h2>
+    <p class="section-sub">Three dreamers from Chh.Sambhajinagar who dared to reimagine footwear.</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar-img">
+          <img src="images/tanmay.jpg" alt="Tanmay Kashid" onerror="this.style.display='none'">
+        </div>
+        <h3>Tanmay Kashid</h3>
+        <div class="role">Founder & Material Researcher</div>
+        <p>The visionary behind ModySOLE's modular concept. Tanmay came up with the breakthrough idea of interchangeable
+          grip technology and leads all product development.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar-img">
+          <img src="images/sarthak.jpg" alt="Sarthak Gore" onerror="this.style.display='none'">
+        </div>
+        <h3>Sarthak Gore</h3>
+        <div class="role">Founder & Mechanism Researcher</div>
+        <p>ModySOLE's chief researcher who studies footwear technology, material science, and market innovation. Sarthak
+          ensures every grip performs at its peak.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar-img">
+          <img src="images/shahuraj.jpg" alt="Shahuraj Khangunde" onerror="this.style.display='none'">
+        </div>
+        <h3>Shahuraj Khangunde</h3>
+        <div class="role">Founder & Tech Lead</div>
+        <p>The aesthetic mind of the team — responsible for ModySOLE's design identity and digital experience. Shahuraj
+          built this very website you're browsing.</p>
+      </div>
+    </div>
+
+    <div
+      style="margin-top:5rem;background:linear-gradient(135deg,rgba(0,87,255,0.1),rgba(0,212,255,0.05));border:1px solid var(--glass-border);border-radius:30px;padding:3rem;text-align:center">
+      <h3 style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;margin-bottom:1rem">And Together We Built
+        ModySOLE.</h3>
+      <p style="font-size:1.1rem;color:rgba(255,255,255,0.7);max-width:700px;margin:0 auto;line-height:1.9">
+        We plan to change how footwear is perceived. Every sole we craft is a step toward freedom —
+        freedom to choose, to move, to express.
+        <br><br>
+        <em style="color:var(--cyan)">"This isn't just a shoe. It's a mindset."</em>
+      </p>
+      <a href="shop.html" class="btn-primary" style="display:inline-flex;margin-top:2rem">
+        <i class="fas fa-shopping-bag"></i> Shop the Collection
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-bottom"
+      style="border-top:1px solid var(--glass-border);padding-top:2rem;display:flex;justify-content:space-between">
+      <p>© 2026 ModySOLE. Made with ❤️ in Chh.Sambhajinagar, Maharashtra.</p>
+      <p>modysole.in</p>
+    </div>
+  </footer>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="hideLogin()">×</span>
+      <h2>Welcome Back</h2>
+      <p>Sign in to track orders & save designs</p>
+      <button class="social-btn google" onclick="loginWith('Google')"><i class="fab fa-google"></i> Continue with
+        Google</button>
+      <button class="social-btn facebook" onclick="loginWith('Facebook')"><i class="fab fa-facebook-f"></i> Continue
+        with Facebook</button>
+      <button class="social-btn twitter" onclick="loginWith('X')"><i class="fab fa-twitter"></i> Continue with
+        X</button>
+      <button class="social-btn mobile" onclick="loginWith('Mobile')"><i class="fas fa-mobile-alt"></i> Mobile
+        OTP</button>
+      <button class="social-btn guest-btn" onclick="hideLogin()">Continue as Guest →</button>
+    </div>
+  </div>
+
+  <div id="toast"><span class="toast-icon"></span><span id="toast-msg"></span></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>

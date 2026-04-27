@@ -1,0 +1,159 @@
+/* ============================================================
+   MODYSOLE — Customizer Page Styles
+   ============================================================ */
+.customizer-page { padding-top: 6rem; min-height: 100vh; }
+
+/* ── Sport Selector ── */
+.sport-selector {
+  display: flex; gap: 0.8rem; flex-wrap: wrap;
+  margin-bottom: 2rem; margin-top: 1rem;
+}
+.sport-btn {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 24px; border-radius: 50px;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  color: rgba(255,255,255,0.6); font-size: 0.9rem; font-weight: 600;
+  cursor: pointer; transition: all 0.3s;
+}
+.sport-btn:hover { border-color: rgba(0,212,255,0.3); color: #fff; }
+.sport-btn.active {
+  background: linear-gradient(135deg, var(--primary), rgba(0,212,255,0.4));
+  border-color: var(--cyan); color: #fff;
+  box-shadow: 0 4px 20px rgba(0,87,255,0.3);
+}
+.sport-emoji { font-size: 1.3rem; }
+
+/* ── Layout ── */
+.customizer-layout {
+  display: grid; grid-template-columns: 1fr 340px;
+  gap: 2rem; min-height: 65vh;
+}
+
+/* ── 3D Viewer ── */
+.viewer-wrap {
+  position: relative;
+  background: radial-gradient(ellipse at center, rgba(0,87,255,0.06), transparent 70%), var(--glass);
+  border: 1px solid var(--glass-border); border-radius: 24px;
+  overflow: hidden; min-height: 480px;
+}
+#shoe-canvas { width: 100%; height: 100%; display: block; cursor: grab; }
+#shoe-canvas:active { cursor: grabbing; }
+
+.viewer-hint {
+  position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
+  padding: 8px 20px; border-radius: 50px;
+  font-size: 0.75rem; color: rgba(255,255,255,0.5);
+  display: flex; align-items: center; gap: 8px;
+  pointer-events: none; transition: opacity 0.5s;
+}
+.sport-label {
+  position: absolute; top: 20px; left: 20px;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
+  padding: 8px 18px; border-radius: 50px;
+  font-size: 0.8rem; font-weight: 700; color: var(--cyan);
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.viewer-loading {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: rgba(15,15,26,0.8); z-index: 10; transition: opacity 0.5s;
+}
+.viewer-loading.hidden { opacity: 0; pointer-events: none; }
+.spinner {
+  width: 48px; height: 48px; border-radius: 50%;
+  border: 3px solid var(--glass-border); border-top-color: var(--cyan);
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.viewer-loading p { margin-top: 1rem; color: rgba(255,255,255,0.5); font-size: 0.85rem; }
+
+/* ── Controls Panel ── */
+.controls-panel {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 24px; padding: 1.8rem;
+  display: flex; flex-direction: column; gap: 1.2rem;
+  max-height: 80vh; overflow-y: auto;
+}
+.controls-panel h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; }
+.control-group { border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem; }
+.control-group:last-of-type { border-bottom: none; }
+.control-label {
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--cyan); margin-bottom: 0.7rem; display: block;
+}
+
+/* Color swatches */
+.color-swatches { display: flex; flex-wrap: wrap; gap: 8px; }
+.color-swatch {
+  width: 34px; height: 34px; border-radius: 50%; border: 2px solid transparent;
+  cursor: pointer; transition: all 0.2s;
+}
+.color-swatch:hover { transform: scale(1.15); }
+.color-swatch.active { border-color: #fff; box-shadow: 0 0 0 3px var(--primary); }
+
+/* Sole locked */
+.sole-locked {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: 12px;
+  background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
+  font-size: 0.8rem; color: rgba(255,255,255,0.5);
+}
+.sole-preview { width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2); flex-shrink: 0; }
+
+/* Quantity */
+.qty-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.6rem; }
+.qty-btn {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  color: #fff; font-size: 1.2rem; font-weight: 700;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.qty-btn:hover { background: var(--primary); border-color: var(--primary); }
+.qty-display {
+  font-family: 'Bebas Neue', sans-serif; font-size: 2rem;
+  min-width: 40px; text-align: center;
+}
+.qty-limit-row { display: flex; align-items: center; gap: 8px; margin-bottom: 0.4rem; }
+.limit-input {
+  width: 50px; padding: 4px 8px; border-radius: 8px;
+  background: rgba(255,255,255,0.08); border: 1px solid var(--glass-border);
+  color: #fff; font-family: 'Inter', sans-serif; font-size: 0.8rem;
+  text-align: center; outline: none;
+}
+.qty-info { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+.qty-info.warning { color: var(--orange); }
+.qty-info.exceeded { color: #ff5555; }
+
+/* Price */
+.price-summary {
+  background: rgba(0,87,255,0.06); border: 1px solid rgba(0,87,255,0.15);
+  border-radius: 16px; padding: 1rem 1.2rem;
+}
+.price-line {
+  display: flex; justify-content: space-between;
+  font-size: 0.85rem; color: rgba(255,255,255,0.6); padding: 4px 0;
+}
+.price-line.total {
+  font-weight: 800; font-size: 1.1rem; color: #fff;
+  border-top: 1px solid rgba(0,87,255,0.2); padding-top: 8px; margin-top: 4px;
+}
+
+/* Action buttons */
+.action-row { display: flex; gap: 0.6rem; margin-top: auto; }
+.action-row .btn-primary { flex: 1; justify-content: center; padding: 12px; }
+.btn-outline {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  background: transparent; border: 1px solid var(--glass-border);
+  color: rgba(255,255,255,0.6); padding: 12px 16px;
+  border-radius: 50px; font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; transition: all 0.3s;
+}
+.btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+
+@media (max-width: 768px) {
+  .customizer-layout { grid-template-columns: 1fr; }
+  .viewer-wrap { min-height: 320px; }
+  .sport-selector { justify-content: center; }
+}

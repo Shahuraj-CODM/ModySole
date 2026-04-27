@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ModySOLE | 3D Studio — Design Your Shoe</title>
+  <meta name="description" content="Customize your ModySOLE shoe in 3D — pick a sport, change colors, set sole quantity.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link rel="stylesheet" href="css/customizer.css">
+</head>
+<body>
+  <header id="main-header">
+    <a href="index.html" class="logo">Mody<span>SOLE</span></a>
+    <nav>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="shop.html" class="nav-link">Shop</a>
+      <a href="customizer.html" class="nav-link active">3D Studio</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="cart.html" class="nav-link">Cart</a>
+    </nav>
+    <div class="header-right">
+      <button class="cart-btn" onclick="toggleCart()"><i class="fas fa-shopping-bag"></i> Cart (<span id="cart-count">0</span>)</button>
+      <button class="login-btn" onclick="showLogin()">Login</button>
+    </div>
+  </header>
+
+  <section class="customizer-page">
+    <div class="section-label">3D Customizer</div>
+    <h1 class="section-title">Design Your <span>ModySOLE</span></h1>
+    <p class="section-sub">Pick a sport, customize colors, choose your sole quantity.</p>
+
+    <!-- Sport Selector -->
+    <div class="sport-selector" id="sport-selector">
+      <button class="sport-btn active" data-sport="cricket" onclick="selectSport('cricket',this)">
+        <span class="sport-emoji">🏏</span><span>Cricket</span>
+      </button>
+      <button class="sport-btn" data-sport="football" onclick="selectSport('football',this)">
+        <span class="sport-emoji">⚽</span><span>Football</span>
+      </button>
+      <button class="sport-btn" data-sport="tennis" onclick="selectSport('tennis',this)">
+        <span class="sport-emoji">🎾</span><span>Tennis</span>
+      </button>
+      <button class="sport-btn" data-sport="basketball" onclick="selectSport('basketball',this)">
+        <span class="sport-emoji">🏀</span><span>Basketball</span>
+      </button>
+      <button class="sport-btn" data-sport="running" onclick="selectSport('running',this)">
+        <span class="sport-emoji">🏃</span><span>Running</span>
+      </button>
+    </div>
+
+    <div class="customizer-layout">
+      <!-- 3D Viewer -->
+      <div class="viewer-wrap">
+        <div class="viewer-loading" id="viewer-loading">
+          <div class="spinner"></div>
+          <p>Loading 3D model...</p>
+        </div>
+        <canvas id="shoe-canvas"></canvas>
+        <div class="viewer-hint" id="viewer-hint"><i class="fas fa-hand-pointer"></i> Drag to rotate · Scroll to zoom</div>
+        <div class="sport-label" id="sport-label">Cricket Spike</div>
+      </div>
+
+      <!-- Controls Panel -->
+      <div class="controls-panel">
+        <h3>Customize</h3>
+
+        <div class="control-group">
+          <span class="control-label">Upper Color</span>
+          <div class="color-swatches" id="upper-colors">
+            <div class="color-swatch active" style="background:#1A1A2E" data-color="#1A1A2E" data-part="upper"></div>
+            <div class="color-swatch" style="background:#FFFFFF" data-color="#FFFFFF" data-part="upper"></div>
+            <div class="color-swatch" style="background:#0057FF" data-color="#0057FF" data-part="upper"></div>
+            <div class="color-swatch" style="background:#FF6B2B" data-color="#FF6B2B" data-part="upper"></div>
+            <div class="color-swatch" style="background:#00C853" data-color="#00C853" data-part="upper"></div>
+            <div class="color-swatch" style="background:#E91E63" data-color="#E91E63" data-part="upper"></div>
+            <div class="color-swatch" style="background:#FFD700" data-color="#FFD700" data-part="upper"></div>
+            <div class="color-swatch" style="background:#8B4513" data-color="#8B4513" data-part="upper"></div>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <span class="control-label">Lace Color</span>
+          <div class="color-swatches" id="lace-colors">
+            <div class="color-swatch active" style="background:#FFFFFF" data-color="#FFFFFF" data-part="laces"></div>
+            <div class="color-swatch" style="background:#000000" data-color="#000000" data-part="laces"></div>
+            <div class="color-swatch" style="background:#FF6B2B" data-color="#FF6B2B" data-part="laces"></div>
+            <div class="color-swatch" style="background:#00D4FF" data-color="#00D4FF" data-part="laces"></div>
+            <div class="color-swatch" style="background:#FFD700" data-color="#FFD700" data-part="laces"></div>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <span class="control-label">Sole Color (Fixed White for Snap-Lock)</span>
+          <div class="sole-locked">
+            <div class="sole-preview" style="background:#FFFFFF"></div>
+            <span>White — optimized for ModySOLE's magnetic snap-lock</span>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <span class="control-label">Sole Quantity</span>
+          <div class="qty-row">
+            <button class="qty-btn" onclick="changeSoleQty(-1)">−</button>
+            <span class="qty-display" id="sole-qty">1</span>
+            <button class="qty-btn" onclick="changeSoleQty(1)">+</button>
+          </div>
+          <div class="qty-limit-row">
+            <span class="control-label" style="margin:0;font-size:0.65rem">Set your limit:</span>
+            <input type="number" id="sole-limit" value="3" min="1" max="20" class="limit-input" onchange="updateLimit()">
+          </div>
+          <div class="qty-info" id="qty-info">1 of 3 soles selected</div>
+        </div>
+
+        <!-- Price -->
+        <div class="price-summary">
+          <div class="price-line"><span>Base Shoe</span><span>₹2,499</span></div>
+          <div class="price-line"><span>Soles (<span id="price-qty">1</span>×₹499)</span><span>₹<span id="price-soles">499</span></span></div>
+          <div class="price-line total"><span>Total</span><span>₹<span id="price-total">2,998</span></span></div>
+        </div>
+
+        <div class="action-row">
+          <button class="btn-primary" onclick="addDesignToCart()"><i class="fas fa-shopping-bag"></i> Add to Cart</button>
+          <button class="btn-outline" onclick="resetCustomizer()" title="Reset"><i class="fas fa-undo"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Confirmation Modal -->
+  <div id="limitModal" class="modal">
+    <div class="modal-content" style="max-width:440px">
+      <span class="close-modal" onclick="closeLimitModal()">×</span>
+      <div style="font-size:3rem;margin-bottom:1rem">⚠️</div>
+      <h2>Sole Limit Exceeded</h2>
+      <p id="limit-msg">You set a limit of 3 soles. Adding another will exceed it.</p>
+      <div style="display:flex;gap:0.8rem;margin-top:1.5rem;justify-content:center">
+        <button class="btn-primary" onclick="confirmExceedLimit()">Yes, Add Anyway</button>
+        <button class="btn-outline" onclick="closeLimitModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="hideLogin()">×</span>
+      <h2>Welcome Back</h2>
+      <p>Sign in to track orders & save designs</p>
+      <button class="social-btn google" onclick="loginWith('Google')"><i class="fab fa-google"></i> Continue with Google</button>
+      <button class="social-btn facebook" onclick="loginWith('Facebook')"><i class="fab fa-facebook-f"></i> Continue with Facebook</button>
+      <button class="social-btn guest-btn" onclick="hideLogin()">Continue as Guest →</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-bottom" style="border-top:1px solid var(--glass-border);padding-top:2rem;display:flex;justify-content:space-between">
+      <p>© 2026 ModySOLE. Made with ❤️ in Chh.Sambhajinagar.</p><p>modysole.in</p>
+    </div>
+  </footer>
+
+  <div id="toast"><span class="toast-icon"></span><span id="toast-msg"></span></div>
+
+  <script type="importmap">
+  { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+  }}
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/app.js"></script>
+  <script type="module" src="js/customizer3d.js"></script>
+</body>
+</html>

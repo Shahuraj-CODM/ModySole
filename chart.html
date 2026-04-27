@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Bug Severity vs Impact</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a20; /* Dark background */
+            color: #ffffff;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .dashboard {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        /* Chart Styling */
+        #chart-container {
+            background-color: #24242c;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            text-align: center;
+            font-weight: 500;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #e8eaed;
+        }
+
+        /* SVG Axes Styling */
+        .axis-text { font-size: 14px; fill: #e8eaed; }
+        .domain, .tick line { stroke: #5f6368; }
+        .grid line { stroke: #3c4043; stroke-opacity: 0.5; }
+
+        /* Controls Styling */
+        #controls-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .control-row {
+            background-color: #2b2b33;
+            border: 1px solid #3d3d48;
+            border-radius: 12px;
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .control-label {
+            font-weight: bold;
+            font-size: 16px;
+            width: 100px;
+        }
+
+        /* Custom Slider Styling */
+        input[type="range"] {
+            -webkit-appearance: none;
+            flex-grow: 1;
+            margin: 0 20px;
+            background: transparent;
+        }
+        input[type="range"]:focus { outline: none; }
+        input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            background: #4a4a55;
+            border-radius: 3px;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #a8c7fa;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -7px;
+        }
+
+        .impact-value {
+            width: 80px;
+            text-align: right;
+            font-size: 14px;
+            margin-right: 20px;
+        }
+
+        .delete-btn {
+            background-color: #3f3f4a;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        .delete-btn:hover {
+            background-color: #5a5a68;
+        }
+
+        /* Add Row Styling */
+        .add-row {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .add-input {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #3d3d48;
+            background: #2b2b33;
+            color: white;
+            outline: none;
+        }
+        .add-btn {
+            background-color: #a8c7fa;
+            color: #1a1a20;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <div id="chart-container">
+            <h2>Bug Severity vs Impact Level</h2>
+            <div id="d3-chart"></div>
+        </div>
+        
+        <div id="controls-container">
+            </div>
+
+        <div class="add-row">
+            <input type="text" id="new-category" class="add-input" placeholder="New severity level...">
+            <button class="add-btn" onclick="addCategory()">Add Category</button>
+        </div>
+    </div>
+
+    <script>
+        // 1. Initial State Data
+        let appData = [
+            { id: 'id_1', name: 'Low', impact: 2 },
+            { id: 'id_2', name: 'Medium', impact: 4 },
+            { id: 'id_3', name: 'High', impact: 7 },
+            { id: 'id_4', name: 'Critical', impact: 9 }
+        ];
+
+        // 2. Setup D3 Chart Dimensions
+        const margin = { top: 20, right: 30, bottom: 40, left: 50 };
+        const width = 760 - margin.left - margin.right;
+        const height = 350 - margin.top - margin.bottom;
+
+        const svg = d3.select("#d3-chart")
+            .append("svg")
+            .attr("width", "100%")
+            .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // Scales
+        const x = d3.scaleBand().range([0, width]).padding(0.3);
+        const y = d3.scaleLinear().domain([0, 10]).range([height, 0]);
+        const colorScale = d3.scaleLinear().domain([0, 10]).range(["#8ab4f8", "#1967d2"]);
+
+        // Axis groups
+        const xAxisGroup = svg.append("g").attr("transform", `translate(0,${height})`);
+        const yAxisGroup = svg.append("g");
+        
+        // Static Y-Axis & Grid
+        yAxisGroup.call(d3.axisLeft(y).ticks(5))
+            .selectAll("text").attr("class", "axis-text");
+            
+        svg.append("g").attr("class", "grid")
+            .call(d3.axisLeft(y).tickSize(-width).tickFormat("").ticks(5));
+
+        // 3. Core Render Function for Chart
+        function updateChart() {
+            // Update X domain based on current data
+            x.domain(appData.map(d => d.name));
+            
+            // Redraw X Axis smoothly
+            xAxisGroup.transition().duration(300)
+                .call(d3.axisBottom(x).tickSizeOuter(0))
+                .selectAll("text").attr("class", "axis-text");
+
+            // Bind data
+            const bars = svg.selectAll(".bar").data(appData, d => d.id);
+
+            // Remove deleted bars
+            bars.exit()
+                .transition().duration(300)
+                .attr("y", height)
+                .attr("height", 0)
+                .remove();
+
+            // Add new bars and update existing ones
+            bars.enter()
+                .append("rect")
+                .attr("class", "bar")
+                .attr("x", d => x(d.name))
+                .attr("y", height) // start from bottom
+                .attr("width", x.bandwidth())
+                .attr("height", 0)
+                .attr("rx", 6)
+                .merge(bars) // Combine enter and update selections
+                .transition().duration(300)
+                .attr("x", d => x(d.name))
+                .attr("width", x.bandwidth())
+                .attr("y", d => y(d.impact))
+                .attr("height", d => height - y(d.impact))
+                .attr("fill", d => colorScale(d.impact));
+        }
+
+        // 4. Render HTML Controls
+        function updateControls() {
+            const container = document.getElementById('controls-container');
+            container.innerHTML = ''; // Clear current
+
+            appData.forEach(item => {
+                const row = document.createElement('div');
+                row.className = 'control-row';
+                
+                row.innerHTML = `
+                    <div class="control-label">${item.name}</div>
+                    <input type="range" min="0" max="10" step="1" value="${item.impact}" 
+                           oninput="handleSliderChange('${item.id}', this.value)">
+                    <div class="impact-value">Impact: <span id="val-${item.id}">${item.impact}</span></div>
+                    <button class="delete-btn" onclick="deleteCategory('${item.id}')">delete</button>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        // 5. Interaction Handlers
+        function handleSliderChange(id, newValue) {
+            const value = parseInt(newValue);
+            // Update data array
+            const item = appData.find(d => d.id === id);
+            if (item) {
+                item.impact = value;
+            }
+            // Update text label instantly
+            document.getElementById(`val-${id}`).innerText = value;
+            // Redraw chart
+            updateChart();
+        }
+
+        function deleteCategory(id) {
+            appData = appData.filter(d => d.id !== id);
+            updateControls();
+            updateChart();
+        }
+
+        function addCategory() {
+            const input = document.getElementById('new-category');
+            const name = input.value.trim();
+            if (name === "") return; // Don't add empty
+
+            appData.push({
+                id: 'id_' + Date.now(),
+                name: name,
+                impact: 5 // Default middle value
+            });
+
+            input.value = ""; // Clear input
+            updateControls();
+            updateChart();
+        }
+
+        // Initialize Everything
+        updateControls();
+        updateChart();
+    </script>
+</body>
+</html>

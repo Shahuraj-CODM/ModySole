@@ -1,0 +1,28 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Cricket Pro Spike",
+      "price": 1430,
+      "img": "images/cricket-shoe.png"
+    },
+    {
+      "id": "2",
+      "name": "Football Velocity",
+      "price": 1400,
+      "img": "images/football-shoe.png"
+    },
+    {
+      "id": "3",
+      "name": "Tennis Court Master",
+      "price": 1800,
+      "img": "images/tennis-shoe.jpeg"
+    },
+    {
+      "id": "4",
+      "name": "Basketball Dominator",
+      "price": 1800,
+      "img": "images/basketball-shoe.jpeg"
+    }
+  ]
+}

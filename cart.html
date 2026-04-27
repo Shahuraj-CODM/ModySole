@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ModySOLE | Cart</title>
+  <meta name="description" content="Your ModySOLE shopping cart.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+
+<body>
+  <header id="main-header">
+    <a href="index.html" class="logo">Mody<span>SOLE</span></a>
+    <nav>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="shop.html" class="nav-link">Shop</a>
+      <a href="customizer.html" class="nav-link">3D Studio</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="cart.html" class="nav-link active">Cart</a>
+    </nav>
+    <div class="header-right">
+      <button class="cart-btn" onclick="toggleCart()">
+        <i class="fas fa-shopping-bag"></i> Cart (<span id="cart-count">0</span>)
+      </button>
+      <button class="login-btn" onclick="showLogin()">Login</button>
+    </div>
+  </header>
+
+  <section class="cart-section">
+    <div class="section-label">Shopping Bag</div>
+    <h1 class="section-title">Your <span>Cart</span></h1>
+
+    <div class="cart-layout" style="margin-top:2.5rem">
+      <div id="cart-items"></div>
+      <div class="cart-summary">
+        <h3>Order Summary</h3>
+        <div class="summary-row"><span>Subtotal</span><span>₹<span id="cart-subtotal">0</span></span></div>
+        <div class="summary-row"><span>Shipping</span><span id="shipping-label">Free</span></div>
+        <div class="summary-row"><span>Discount</span><span style="color:var(--green)">-₹0</span></div>
+        <div class="summary-row total"><span>Total</span><span>₹<span id="cart-total">0</span></span></div>
+        <button onclick="checkout()" class="btn-primary" style="width:100%;justify-content:center;margin-top:1.5rem">
+          <i class="fas fa-lock"></i> Proceed to Checkout
+        </button>
+        <div style="margin-top:1.5rem;text-align:center">
+          <input type="text" id="coupon-input" placeholder="Coupon code"
+            style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:50px;padding:10px 20px;color:white;width:60%;font-family:Inter,sans-serif;outline:none">
+          <button onclick="applyCoupon()"
+            style="background:var(--primary);border:none;color:white;padding:10px 16px;border-radius:50px;cursor:pointer;font-weight:700;margin-left:8px">Apply</button>
+        </div>
+        <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--glass-border);text-align:center">
+          <div style="display:flex;justify-content:center;gap:1rem;font-size:0.8rem;color:rgba(255,255,255,0.4)">
+            <span><i class="fas fa-shield-alt" style="color:var(--green)"></i> Secure Checkout</span>
+            <span><i class="fas fa-undo" style="color:var(--cyan)"></i> Easy Returns</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-bottom"
+      style="border-top:1px solid var(--glass-border);padding-top:2rem;display:flex;justify-content:space-between">
+      <p>© 2026 ModySOLE. Made in Chh.Sambhajinagar, Maharashtra.</p>
+      <p>modysole.in</p>
+    </div>
+  </footer>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="hideLogin()">×</span>
+      <h2>Welcome Back</h2>
+      <p>Sign in to track orders & save designs</p>
+      <button class="social-btn google" onclick="loginWith('Google')"><i class="fab fa-google"></i> Continue with
+        Google</button>
+      <button class="social-btn facebook" onclick="loginWith('Facebook')"><i class="fab fa-facebook-f"></i> Continue
+        with Facebook</button>
+      <button class="social-btn twitter" onclick="loginWith('X')"><i class="fab fa-twitter"></i> Continue with
+        X</button>
+      <button class="social-btn mobile" onclick="loginWith('Mobile')"><i class="fas fa-mobile-alt"></i> Mobile
+        OTP</button>
+      <button class="social-btn guest-btn" onclick="hideLogin()">Continue as Guest →</button>
+    </div>
+  </div>
+
+  <div id="toast"><span class="toast-icon"></span><span id="toast-msg"></span></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ModySOLE | Shop — All Grip Systems</title>
+  <meta name="description"
+    content="Browse the complete ModySOLE collection — base shoes, sports grips, trekking, formal and casual soles.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+
+<body>
+  <header id="main-header">
+    <a href="index.html" class="logo">Mody<span>SOLE</span></a>
+    <nav>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="shop.html" class="nav-link active">Shop</a>
+      <a href="customizer.html" class="nav-link">3D Studio</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="cart.html" class="nav-link">Cart</a>
+    </nav>
+    <div class="header-right">
+      <button class="cart-btn" onclick="toggleCart()">
+        <i class="fas fa-shopping-bag"></i> Cart (<span id="cart-count">0</span>)
+      </button>
+      <button class="login-btn" onclick="showLogin()">Login</button>
+    </div>
+  </header>
+
+  <section class="shop-section">
+    <div class="shop-header">
+      <div>
+        <div class="section-label">All Products</div>
+        <h1 class="section-title">Our <span>Collection</span></h1>
+      </div>
+      <div class="filter-tags">
+        <button class="filter-tag active" onclick="filterProducts('all', this)">All</button>
+        <button class="filter-tag" onclick="filterProducts('base', this)">Base Shoes</button>
+        <button class="filter-tag" onclick="filterProducts('sports', this)">Sports</button>
+        <button class="filter-tag" onclick="filterProducts('trekking', this)">Trekking</button>
+        <button class="filter-tag" onclick="filterProducts('formal', this)">Formal</button>
+      </div>
+    </div>
+    <div class="products-grid" id="shop-grid"></div>
+  </section>
+
+  <footer>
+    <div class="footer-bottom"
+      style="border-top:1px solid var(--glass-border);padding-top:2rem;display:flex;justify-content:space-between">
+      <p>© 2026 ModySOLE. Made in Chh.Sambhajinagar, Maharashtra.</p>
+      <p>modysole.in</p>
+    </div>
+  </footer>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="hideLogin()">×</span>
+      <h2>Welcome Back</h2>
+      <p>Sign in to track orders & save designs</p>
+      <button class="social-btn google" onclick="loginWith('Google')"><i class="fab fa-google"></i> Continue with
+        Google</button>
+      <button class="social-btn facebook" onclick="loginWith('Facebook')"><i class="fab fa-facebook-f"></i> Continue
+        with Facebook</button>
+      <button class="social-btn twitter" onclick="loginWith('X')"><i class="fab fa-twitter"></i> Continue with
+        X</button>
+      <button class="social-btn mobile" onclick="loginWith('Mobile')"><i class="fas fa-mobile-alt"></i> Mobile
+        OTP</button>
+      <button class="social-btn guest-btn" onclick="hideLogin()">Continue as Guest →</button>
+    </div>
+  </div>
+
+  <div id="toast"><span class="toast-icon"></span><span id="toast-msg"></span></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
