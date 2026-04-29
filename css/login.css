@@ -56,10 +56,71 @@
   line-height: 1.5;
 }
 
-.login-methods {
+.login-form {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 1rem;
+}
+
+.login-input {
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.login-input:focus {
+  border-color: var(--cyan);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.login-submit {
+  width: 100%;
+  padding: 14px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, var(--primary), var(--cyan));
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.login-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 1.5rem 0;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.85rem;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.divider span {
+  padding: 0 10px;
+}
+
+.test-creds {
+  margin-top: 1.5rem;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.6;
 }
 
 .login-btn-option {
@@ -79,29 +140,10 @@
   transition: all 0.3s ease;
 }
 
-.login-btn-option:hover {
-  background: rgba(255, 255, 255, 0.15);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+.login-btn-option.guest {
+  border-color: rgba(255, 255, 255, 0.3);
 }
-
-.login-btn-option.google:hover { border-color: #DB4437; color: #DB4437; }
-.login-btn-option.apple:hover { border-color: #fff; color: #fff; }
-.login-btn-option.email:hover { border-color: var(--cyan); color: var(--cyan); }
-.login-btn-option.mobile:hover { border-color: var(--primary); color: var(--primary); }
-
-.login-btn-option i {
-  font-size: 1.2rem;
-}
-
-.back-to-home {
-  display: inline-block;
-  margin-top: 2.5rem;
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.5);
-  transition: color 0.3s;
-}
-
-.back-to-home:hover {
-  color: var(--cyan);
+.login-btn-option.guest:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #fff;
 }

@@ -17,22 +17,24 @@
       <h1>Welcome Back</h1>
       <p>Sign in to track your orders and save your 3D custom shoe designs.</p>
       
-      <div class="login-methods">
-        <button class="login-btn-option google" onclick="loginWith('Google')">
-          <i class="fab fa-google"></i> Continue with Google
-        </button>
-        <button class="login-btn-option apple" onclick="loginWith('Apple')">
-          <i class="fab fa-apple"></i> Continue with Apple
-        </button>
-        <button class="login-btn-option email" onclick="loginWith('Email')">
-          <i class="fas fa-envelope"></i> Continue with Email
-        </button>
-        <button class="login-btn-option mobile" onclick="loginWith('Mobile')">
-          <i class="fas fa-mobile-alt"></i> Continue with Mobile OTP
-        </button>
+      <div class="login-form">
+        <input type="email" id="login-email" placeholder="Email Address" class="login-input" value="user@modysole.com">
+        <input type="password" id="login-password" placeholder="Password" class="login-input" value="user123">
+        <button class="login-submit" onclick="handleLogin()">Login</button>
       </div>
       
-      <a href="index.html" class="back-to-home">← Back to Home</a>
+      <div class="divider">
+        <span>OR</span>
+      </div>
+
+      <button class="login-btn-option guest" onclick="loginAsGuest()">
+        <i class="fas fa-user-circle"></i> Continue as Guest
+      </button>
+      
+      <div class="test-creds">
+        <small>Test Admin: admin@modysole.com / admin123</small><br>
+        <small>Test User: user@modysole.com / user123</small>
+      </div>
     </div>
   </div>
 

@@ -219,6 +219,7 @@ function filterProducts(cat, btn) {
 
 // ===================== CART FUNCTIONS =====================
 window.addToCart = function(id, name, price, img) {
+  if (checkGuestAction()) return;
   cart.push({ id, name, price: Number(price), img });
   saveCart();
   updateCartCount();
@@ -399,49 +400,91 @@ window.addEventListener('scroll', () => {
 });
 
 // ===================== AUTHENTICATION =====================
-const PROTECTED_ROUTES = ['shop.html', 'customizer.html', 'cart.html'];
-
 function checkAuth() {
-  const isLoggedIn = localStorage.getItem('ms_session_active') === 'true';
+  const session = localStorage.getItem('ms_session_active');
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 
-  // 1. Route Protection: Redirect if accessing protected page while logged out
-  if (!isLoggedIn && PROTECTED_ROUTES.includes(currentPage)) {
+  // 1. Route Protection: Redirect if accessing ANY page while completely logged out
+  // Allow login.html and empty paths (if mapped to login) to be accessed
+  if (!session && currentPage !== 'login.html') {
     window.location.href = 'login.html';
     return;
   }
 
-  // 2. Prevent accessing login page if already logged in
-  if (isLoggedIn && currentPage === 'login.html') {
+  // 2. Prevent accessing login page if already logged in or guest
+  if (session && currentPage === 'login.html') {
     window.location.href = 'index.html';
     return;
   }
 
   // 3. Update Header Login/Logout Button
-  if (isLoggedIn) {
+  if (session) {
     document.querySelectorAll('.login-btn').forEach(btn => {
-      btn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+      btn.innerHTML = session === 'guest' 
+        ? '<i class="fas fa-sign-in-alt"></i> Sign In' 
+        : '<i class="fas fa-sign-out-alt"></i> Logout';
       btn.onclick = logout;
     });
   }
 }
 
-// Simulate OAuth login process
-function loginWith(provider) {
-  const btn = event.currentTarget;
-  const originalText = btn.innerHTML;
-  btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Connecting...`;
-  
+// Handle Form Login (Test Accounts)
+function handleLogin() {
+  const email = document.getElementById('login-email').value;
+  const pass = document.getElementById('login-password').value;
+  const btn = document.querySelector('.login-submit');
+
+  if ((email === 'admin@modysole.com' && pass === 'admin123') ||
+      (email === 'user@modysole.com' && pass === 'user123')) {
+    
+    btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Connecting...`;
+    setTimeout(() => {
+      localStorage.setItem('ms_session_active', email.split('@')[0]); // stores 'admin' or 'user'
+      window.location.href = 'index.html';
+    }, 800);
+  } else {
+    showToast('Invalid credentials. Check test logins.', 'error');
+  }
+}
+
+// Handle Guest Login
+function loginAsGuest() {
+  const btn = document.querySelector('.login-btn-option.guest');
+  btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Entering as Guest...`;
   setTimeout(() => {
-    localStorage.setItem('ms_session_active', 'true');
+    localStorage.setItem('ms_session_active', 'guest');
     window.location.href = 'index.html';
-  }, 1200);
+  }, 800);
 }
 
 function logout(e) {
   if (e) e.preventDefault();
   localStorage.removeItem('ms_session_active');
-  window.location.reload();
+  window.location.href = 'login.html';
+}
+
+// Block guests from performing actions
+function checkGuestAction() {
+  const session = localStorage.getItem('ms_session_active');
+  if (session === 'guest') {
+    // Inject and show modal if it doesn't exist
+    if (!document.getElementById('guestBlockModal')) {
+      document.body.insertAdjacentHTML('beforeend', `
+        <div id="guestBlockModal" class="modal" style="display:flex;">
+          <div class="modal-content">
+            <span class="close-modal" onclick="this.parentElement.parentElement.remove()">×</span>
+            <h2>Action Restricted</h2>
+            <p>You must be logged in to perform these actions and save your cart.</p>
+            <button class="btn-primary" style="width:100%" onclick="logout()">Go to Login</button>
+          </div>
+        </div>
+      `);
+    } else {
+      document.getElementById('guestBlockModal').style.display = 'flex';
+    }
+    return true; // action blocked
+  }
+  return false; // action allowed
 }
 
 // ===================== INIT =====================
