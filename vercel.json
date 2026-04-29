@@ -8,9 +8,15 @@
   ],
   "headers": [
     {
-      "source": "/(.*\\.(?:css|js|png|jpg|jpeg|webp|svg|ico|woff2|json|glb|gltf))",
+      "source": "/(.*\\.(?:png|jpg|jpeg|webp|svg|ico|woff2|glb|gltf))",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=2592000" }
+      ]
+    },
+    {
+      "source": "/(.*\\.(?:css|js|html))",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
       ]
     }
   ]
