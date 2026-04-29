@@ -403,16 +403,17 @@ window.addEventListener('scroll', () => {
 function checkAuth() {
   const session = localStorage.getItem('ms_session_active');
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  const isLoginPage = currentPage === 'login.html' || currentPage === 'login';
 
   // 1. Route Protection: Redirect if accessing ANY page while completely logged out
-  // Allow login.html and empty paths (if mapped to login) to be accessed
-  if (!session && currentPage !== 'login.html') {
+  // Allow login.html (and /login) to be accessed
+  if (!session && !isLoginPage) {
     window.location.href = 'login.html';
     return;
   }
 
   // 2. Prevent accessing login page if already logged in or guest
-  if (session && currentPage === 'login.html') {
+  if (session && isLoginPage) {
     window.location.href = 'index.html';
     return;
   }
