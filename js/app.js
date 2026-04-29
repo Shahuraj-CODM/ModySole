@@ -398,8 +398,55 @@ window.addEventListener('scroll', () => {
   if (h) h.classList.toggle('scrolled', window.scrollY > 80);
 });
 
+// ===================== AUTHENTICATION =====================
+const PROTECTED_ROUTES = ['shop.html', 'customizer.html', 'cart.html'];
+
+function checkAuth() {
+  const isLoggedIn = localStorage.getItem('ms_session_active') === 'true';
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+  // 1. Route Protection: Redirect if accessing protected page while logged out
+  if (!isLoggedIn && PROTECTED_ROUTES.includes(currentPage)) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  // 2. Prevent accessing login page if already logged in
+  if (isLoggedIn && currentPage === 'login.html') {
+    window.location.href = 'index.html';
+    return;
+  }
+
+  // 3. Update Header Login/Logout Button
+  if (isLoggedIn) {
+    document.querySelectorAll('.login-btn').forEach(btn => {
+      btn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+      btn.onclick = logout;
+    });
+  }
+}
+
+// Simulate OAuth login process
+function loginWith(provider) {
+  const btn = event.currentTarget;
+  const originalText = btn.innerHTML;
+  btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Connecting...`;
+  
+  setTimeout(() => {
+    localStorage.setItem('ms_session_active', 'true');
+    window.location.href = 'index.html';
+  }, 1200);
+}
+
+function logout(e) {
+  if (e) e.preventDefault();
+  localStorage.removeItem('ms_session_active');
+  window.location.reload();
+}
+
 // ===================== INIT =====================
 window.addEventListener('DOMContentLoaded', () => {
+  checkAuth();
   initSupabase();
   updateCartCount();
 
