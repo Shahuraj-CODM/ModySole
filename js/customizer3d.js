@@ -14,7 +14,7 @@ const SPORTS = {
   running:    { name: 'Running Aero',         emoji: '🏃', upper: '#E91E63', laces: '#FFFFFF', price: 499 },
 };
 
-const MODEL_URL = 'https://raw.githubusercontent.com/washington254/shoe-customizer/master/shoe.glb';
+const MODEL_URL = 'models/main-shoe.glb';
 const BASE_PRICE = 2499;
 const SOLE_PRICE = 499;
 
@@ -59,72 +59,109 @@ controls.addEventListener('start', () => {
   if (hintEl) hintEl.style.opacity = '0';
 });
 
-// ── Material Groups ──
+// ── Models & Material Groups ──
 let upperMats = [];
 let soleMats = [];
 let laceMats = [];
+let current3DModel = null;
 
-// ── Load Model ──
+const SOLE_MODELS = {
+  main: 'models/main-shoe.glb',
+  sole1: 'models/shoe-sole-1.glb',
+  sole3: 'models/shoe-sole-3.glb'
+};
+
 const loader = new GLTFLoader();
-loader.load(
-  MODEL_URL,
-  (gltf) => {
-    const model = gltf.scene;
-    const box = new THREE.Box3().setFromObject(model);
-    const center = box.getCenter(new THREE.Vector3());
-    const maxDim = Math.max(...box.getSize(new THREE.Vector3()).toArray());
-    model.scale.setScalar(2.5 / maxDim);
-    model.position.sub(center.multiplyScalar(2.5 / maxDim));
-    model.position.y -= 0.3;
 
-    // Categorize meshes
-    const allMeshes = [];
-    model.traverse(c => {
-      if (c.isMesh && c.material) {
-        c.material = c.material.clone();
-        allMeshes.push(c);
-      }
-    });
-
-    // Try name-based classification first
-    allMeshes.forEach(mesh => {
-      const n = (mesh.name || '').toLowerCase();
-      if (n.includes('sole') || n.includes('bottom') || n.includes('outsole') || n.includes('rubber')) {
-        soleMats.push(mesh.material);
-      } else if (n.includes('lace') || n.includes('string') || n.includes('tongue')) {
-        laceMats.push(mesh.material);
-      } else {
-        upperMats.push(mesh.material);
-      }
-    });
-
-    // Fallback: split by index
-    if (upperMats.length === 0 && soleMats.length === 0) {
-      allMeshes.forEach((mesh, i) => {
-        if (i < allMeshes.length * 0.6) upperMats.push(mesh.material);
-        else if (i < allMeshes.length * 0.85) soleMats.push(mesh.material);
-        else laceMats.push(mesh.material);
-      });
-    }
-
-    scene.add(model);
-    loadingEl.classList.add('hidden');
-
-    // Apply initial sport preset
-    applySportPreset('cricket');
-    // Force sole to white
-    applyColor(soleMats, '#FFFFFF');
-  },
-  (xhr) => {
-    const pct = Math.round((xhr.loaded / (xhr.total || 1)) * 100);
-    loadingEl.querySelector('p').textContent = `Loading 3D model... ${pct}%`;
-  },
-  (err) => {
-    console.error('Model load error:', err);
-    loadingEl.querySelector('p').textContent = 'Could not load 3D model. Check internet.';
-    loadingEl.querySelector('.spinner').style.display = 'none';
+function loadShoeModel(url) {
+  if (loadingEl) {
+    loadingEl.classList.remove('hidden');
+    const sp = loadingEl.querySelector('.spinner');
+    if (sp) sp.style.display = 'block';
+    const p = loadingEl.querySelector('p');
+    if (p) p.textContent = 'Loading 3D model...';
   }
-);
+
+  if (current3DModel) {
+    scene.remove(current3DModel);
+    current3DModel = null;
+  }
+  upperMats = [];
+  soleMats = [];
+  laceMats = [];
+
+  loader.load(
+    url,
+    (gltf) => {
+      current3DModel = gltf.scene;
+      const box = new THREE.Box3().setFromObject(current3DModel);
+      const center = box.getCenter(new THREE.Vector3());
+      const maxDim = Math.max(...box.getSize(new THREE.Vector3()).toArray());
+      current3DModel.scale.setScalar(2.5 / maxDim);
+      current3DModel.position.sub(center.multiplyScalar(2.5 / maxDim));
+      current3DModel.position.y -= 0.3;
+
+      const allMeshes = [];
+      current3DModel.traverse(c => {
+        if (c.isMesh && c.material) {
+          c.material = c.material.clone();
+          allMeshes.push(c);
+        }
+      });
+
+      allMeshes.forEach(mesh => {
+        const n = (mesh.name || '').toLowerCase();
+        if (n.includes('sole') || n.includes('bottom') || n.includes('outsole') || n.includes('rubber')) {
+          soleMats.push(mesh.material);
+        } else if (n.includes('lace') || n.includes('string') || n.includes('tongue')) {
+          laceMats.push(mesh.material);
+        } else {
+          upperMats.push(mesh.material);
+        }
+      });
+
+      if (upperMats.length === 0 && soleMats.length === 0) {
+        allMeshes.forEach((mesh, i) => {
+          if (i < allMeshes.length * 0.6) upperMats.push(mesh.material);
+          else if (i < allMeshes.length * 0.85) soleMats.push(mesh.material);
+          else laceMats.push(mesh.material);
+        });
+      }
+
+      scene.add(current3DModel);
+      if (loadingEl) loadingEl.classList.add('hidden');
+      applySportPreset(currentSport);
+      applyColor(soleMats, '#FFFFFF');
+    },
+    (xhr) => {
+      const pct = Math.round((xhr.loaded / (xhr.total || 1)) * 100);
+      if (loadingEl) {
+        const p = loadingEl.querySelector('p');
+        if (p) p.textContent = `Loading 3D model... ${pct}%`;
+      }
+    },
+    (err) => {
+      console.error('Model load error:', err);
+      if (loadingEl) {
+        const p = loadingEl.querySelector('p');
+        if (p) p.textContent = 'Could not load 3D model.';
+        const sp = loadingEl.querySelector('.spinner');
+        if (sp) sp.style.display = 'none';
+      }
+    }
+  );
+}
+
+// Initial load
+loadShoeModel(MODEL_URL);
+
+// Sole Design Selection
+window.selectSoleDesign = function(designKey, btn) {
+  if (!SOLE_MODELS[designKey]) return;
+  document.querySelectorAll('.sole-design-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  loadShoeModel(SOLE_MODELS[designKey]);
+};
 
 // ── Color Helpers ──
 function applyColor(mats, hex) {

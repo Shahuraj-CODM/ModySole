@@ -92,6 +92,19 @@
 .color-swatch:hover { transform: scale(1.15); }
 .color-swatch.active { border-color: #fff; box-shadow: 0 0 0 3px var(--primary); }
 
+/* Sole design selector */
+.sole-design-options { display: flex; gap: 8px; flex-wrap: wrap; }
+.sole-design-btn {
+  padding: 8px 14px; border-radius: 20px;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border);
+  color: rgba(255,255,255,0.6); font-size: 0.75rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+}
+.sole-design-btn:hover { border-color: rgba(0,212,255,0.3); color: #fff; }
+.sole-design-btn.active {
+  background: var(--primary); border-color: var(--cyan); color: #fff;
+}
+
 /* Sole locked */
 .sole-locked {
   display: flex; align-items: center; gap: 10px;
