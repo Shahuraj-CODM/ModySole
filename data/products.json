@@ -1,28 +1,70 @@
 {
   "products": [
     {
+      "id": "base-1",
+      "name": "ModySOLE Modular Base Shoe (Midnight Black)",
+      "category": "base",
+      "tag": "Base Shoe Only",
+      "price": 2499,
+      "old_price": 2999,
+      "img": "images/cricket-shoe.png",
+      "badge": "Base Shoe",
+      "badge_type": "in-stock"
+    },
+    {
+      "id": "base-2",
+      "name": "ModySOLE Modular Base Shoe (Pure White)",
+      "category": "base",
+      "tag": "Base Shoe Only",
+      "price": 2499,
+      "old_price": 2999,
+      "img": "images/tennis-shoe.jpeg",
+      "badge": "Base Shoe",
+      "badge_type": "in-stock"
+    },
+    {
       "id": "1",
       "name": "Cricket Pro Spike",
+      "category": "sports",
+      "tag": "Sports Grip",
       "price": 1430,
-      "img": "images/cricket-shoe.png"
+      "old_price": 1800,
+      "img": "images/cricket-shoe.png",
+      "badge": "Best Seller",
+      "badge_type": "in-stock"
     },
     {
       "id": "2",
       "name": "Football Velocity",
+      "category": "sports",
+      "tag": "Sports Grip",
       "price": 1400,
-      "img": "images/football-shoe.png"
+      "old_price": 1700,
+      "img": "images/football-shoe.png",
+      "badge": "In Stock",
+      "badge_type": "in-stock"
     },
     {
       "id": "3",
       "name": "Tennis Court Master",
+      "category": "sports",
+      "tag": "Sports Grip",
       "price": 1800,
-      "img": "images/tennis-shoe.jpeg"
+      "old_price": 2200,
+      "img": "images/tennis-shoe.jpeg",
+      "badge": "Low Stock",
+      "badge_type": "low-stock"
     },
     {
       "id": "4",
       "name": "Basketball Dominator",
+      "category": "sports",
+      "tag": "Sports Grip",
       "price": 1800,
-      "img": "images/basketball-shoe.jpeg"
+      "old_price": 2100,
+      "img": "images/basketball-shoe.jpeg",
+      "badge": "In Stock",
+      "badge_type": "in-stock"
     }
   ]
 }

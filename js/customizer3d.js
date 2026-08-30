@@ -222,15 +222,20 @@ function updateQtyUI() {
   document.getElementById('price-total').textContent = (BASE_PRICE + soleQty * SOLE_PRICE).toLocaleString('en-IN');
 
   const info = document.getElementById('qty-info');
-  info.textContent = `${soleQty} of ${soleLimit} soles selected`;
-  info.className = 'qty-info';
-  if (soleQty >= soleLimit) info.classList.add('warning');
-  if (soleQty > soleLimit) { info.classList.remove('warning'); info.classList.add('exceeded'); info.textContent += ' ⚠️ Limit exceeded'; }
+  if (soleQty === 0) {
+    info.textContent = 'Base Shoe Only (0 extra soles)';
+    info.className = 'qty-info';
+  } else {
+    info.textContent = `${soleQty} of ${soleLimit} soles selected`;
+    info.className = 'qty-info';
+    if (soleQty >= soleLimit) info.classList.add('warning');
+    if (soleQty > soleLimit) { info.classList.remove('warning'); info.classList.add('exceeded'); info.textContent += ' ⚠️ Limit exceeded'; }
+  }
 }
 
 window.changeSoleQty = function(delta) {
   const newQty = soleQty + delta;
-  if (newQty < 1) return;
+  if (newQty < 0) return;
 
   // If increasing beyond limit, show confirmation
   if (delta > 0 && newQty > soleLimit) {
@@ -282,10 +287,13 @@ window.resetCustomizer = function() {
 window.addDesignToCart = function() {
   const preset = SPORTS[currentSport];
   const total = BASE_PRICE + soleQty * SOLE_PRICE;
+  const itemName = soleQty > 0 
+    ? `${preset.name} + ${soleQty} sole${soleQty > 1 ? 's' : ''}` 
+    : `${preset.name} (Base Shoe Only)`;
   if (typeof window.addToCart === 'function') {
     window.addToCart(
       `custom-${currentSport}-${Date.now()}`,
-      `${preset.name} + ${soleQty} sole${soleQty > 1 ? 's' : ''}`,
+      itemName,
       total,
       'images/cricket-shoe.png'
     );

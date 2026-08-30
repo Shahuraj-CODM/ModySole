@@ -34,6 +34,28 @@ function updateCartCount() {
 // ===================== LOCAL FALLBACK PRODUCTS =====================
 const localProducts = [
   {
+    id: 'base-1',
+    name: 'ModySOLE Modular Base Shoe (Midnight Black)',
+    category: 'base',
+    tag: 'Base Shoe Only',
+    price: 2499,
+    old_price: 2999,
+    img: 'images/cricket-shoe.png',
+    badge: 'Base Shoe',
+    badge_type: 'in-stock'
+  },
+  {
+    id: 'base-2',
+    name: 'ModySOLE Modular Base Shoe (Pure White)',
+    category: 'base',
+    tag: 'Base Shoe Only',
+    price: 2499,
+    old_price: 2999,
+    img: 'images/tennis-shoe.jpeg',
+    badge: 'Base Shoe',
+    badge_type: 'in-stock'
+  },
+  {
     id: '1',
     name: 'Cricket Pro Spike',
     category: 'sports',
