@@ -41,8 +41,6 @@ const localProducts = [
     price: 1430,
     old_price: 1800,
     img: 'images/cricket-shoe.png',
-    rating: 4.8,
-    reviews: 142,
     badge: 'Best Seller',
     badge_type: 'in-stock'
   },
@@ -54,8 +52,6 @@ const localProducts = [
     price: 1400,
     old_price: 1700,
     img: 'images/football-shoe.png',
-    rating: 4.7,
-    reviews: 98,
     badge: 'In Stock',
     badge_type: 'in-stock'
   },
@@ -67,8 +63,6 @@ const localProducts = [
     price: 1800,
     old_price: 2200,
     img: 'images/tennis-shoe.jpeg',
-    rating: 4.9,
-    reviews: 203,
     badge: 'Low Stock',
     badge_type: 'low-stock'
   },
@@ -80,8 +74,6 @@ const localProducts = [
     price: 1800,
     old_price: 2100,
     img: 'images/basketball-shoe.jpeg',
-    rating: 4.6,
-    reviews: 87,
     badge: 'In Stock',
     badge_type: 'in-stock'
   }
@@ -98,8 +90,6 @@ async function fetchProducts() {
       ...p,
       category: p.category || 'sports',
       tag: (p.category || 'Sports').charAt(0).toUpperCase() + (p.category || 'sports').slice(1) + ' Grip',
-      rating: p.rating || 4.7,
-      reviews: p.reviews || 99,
       badge: 'In Stock',
       badge_type: 'in-stock',
       old_price: p.old_price || null
@@ -137,8 +127,6 @@ async function fetchProducts() {
         price: Number(p.sale_price || p.base_price),
         old_price: p.sale_price ? Number(p.base_price) : null,
         img: p.primary_image_url || 'images/cricket-shoe.png',
-        rating: 4.8,
-        reviews: Math.floor(Math.random() * 150 + 50),
         badge: p.stock_qty > 10 ? 'In Stock' : p.stock_qty > 0 ? 'Low Stock' : 'Sold Out',
         badge_type: p.stock_qty > 10 ? 'in-stock' : 'low-stock'
       }));
@@ -182,10 +170,6 @@ function buildCards(products) {
       <div class="product-info">
         <div class="product-tag">${p.tag || 'Grip System'}</div>
         <h3>${p.name}</h3>
-        <div class="product-rating">
-          <span class="stars">${starsHtml(p.rating)}</span>
-          <span>${p.rating} (${p.reviews})</span>
-        </div>
         <div class="price-row">
           <div>
             <span class="price">₹${p.price}</span>
@@ -198,14 +182,6 @@ function buildCards(products) {
       </div>
     </div>
   `).join('');
-}
-
-function starsHtml(rating) {
-  const full = Math.floor(rating);
-  let s = '';
-  for (let i = 0; i < full; i++) s += '★';
-  if (rating % 1 >= 0.5) s += '½';
-  return s;
 }
 
 // ===================== FILTER (SHOP PAGE) =====================
