@@ -92,7 +92,7 @@ const localProducts = [
     stock_qty: 14,
     is_base: false,
     description: 'Lightweight high-rebound foam midsole with durable asphalt road tread.',
-    img: 'images/cricket-shoe.png',
+    img: 'images/running-sole.jpg',
     badge: 'In Stock',
     badge_type: 'in-stock'
   },
@@ -106,7 +106,7 @@ const localProducts = [
     stock_qty: 9,
     is_base: false,
     description: 'Flat-base design for deadlifts and squats with flexible forefoot grooves for agility drills.',
-    img: 'images/football-shoe.png',
+    img: 'images/gym-sole.jpg',
     badge: 'In Stock',
     badge_type: 'in-stock'
   },
@@ -120,7 +120,7 @@ const localProducts = [
     stock_qty: 7,
     is_base: false,
     description: 'Shock-absorbing forefoot pad and sticky indoor rubber compound for high-impact landings.',
-    img: 'images/tennis-shoe.jpeg',
+    img: 'images/volleyball-sole.jpg',
     badge: 'In Stock',
     badge_type: 'in-stock'
   },
@@ -134,7 +134,7 @@ const localProducts = [
     stock_qty: 6,
     is_base: false,
     description: 'Non-marking gum rubber sole designed for swift indoor wooden court traction and heel cushioning.',
-    img: 'images/tennis-shoe.jpeg',
+    img: 'images/badminton-sole.jpg',
     badge: 'Low Stock',
     badge_type: 'low-stock'
   },
@@ -162,7 +162,7 @@ const localProducts = [
     stock_qty: 5,
     is_base: false,
     description: 'Reinforced high-wear outsole with omni-directional grip for hard and clay courts.',
-    img: 'images/tennis-shoe.jpeg',
+    img: 'images/tennis-sole.jpg',
     badge: 'Low Stock',
     badge_type: 'low-stock'
   }
