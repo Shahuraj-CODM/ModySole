@@ -134,7 +134,7 @@ const localProducts = [
     stock_qty: 6,
     is_base: false,
     description: 'Non-marking gum rubber sole designed for swift indoor wooden court traction and heel cushioning.',
-    img: 'images/badminton-sole.jpg',
+    img: 'images/tennis-shoe.jpeg',
     badge: 'Low Stock',
     badge_type: 'low-stock'
   },
@@ -162,7 +162,7 @@ const localProducts = [
     stock_qty: 5,
     is_base: false,
     description: 'Reinforced high-wear outsole with omni-directional grip for hard and clay courts.',
-    img: 'images/tennis-sole.jpg',
+    img: 'images/tennis-shoe.jpeg',
     badge: 'Low Stock',
     badge_type: 'low-stock'
   }
