@@ -7,11 +7,14 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 // ── Sport Presets ──
 const SPORTS = {
-  cricket:    { name: 'Cricket Spike',       emoji: '🏏', upper: '#1A1A2E', laces: '#FFFFFF', price: 499 },
-  football:   { name: 'Football Velocity',   emoji: '⚽', upper: '#0057FF', laces: '#FFFFFF', price: 499 },
-  tennis:     { name: 'Tennis Court Master',  emoji: '🎾', upper: '#00C853', laces: '#FFD700', price: 499 },
-  basketball: { name: 'Basketball Dominator', emoji: '🏀', upper: '#FF6B2B', laces: '#000000', price: 499 },
-  running:    { name: 'Running Aero',         emoji: '🏃', upper: '#E91E63', laces: '#FFFFFF', price: 499 },
+  cricket:    { name: 'Cricket Pro Spike Sole',       emoji: '🏏', upper: '#1A1A2E', laces: '#FFFFFF', price: 1430 },
+  football:   { name: 'Football Velocity Sole',       emoji: '⚽', upper: '#0057FF', laces: '#FFFFFF', price: 1400 },
+  badminton:  { name: 'Badminton Smash Court Sole',   emoji: '🏸', upper: '#00C853', laces: '#FFFFFF', price: 1650 },
+  basketball: { name: 'Basketball Dominator Sole',   emoji: '🏀', upper: '#FF6B2B', laces: '#000000', price: 1800 },
+  tennis:     { name: 'Tennis Court Master Sole',    emoji: '🎾', upper: '#9C27B0', laces: '#FFD700', price: 1800 },
+  volleyball: { name: 'Volleyball Spike Grip Sole',   emoji: '🏐', upper: '#00D4FF', laces: '#FFFFFF', price: 1550 },
+  running:    { name: 'Running Aero Cushion Sole',   emoji: '🏃', upper: '#E91E63', laces: '#FFFFFF', price: 1350 },
+  gym:        { name: 'Gym & Training Flex Sole',    emoji: '🏋️', upper: '#3F51B5', laces: '#FFFFFF', price: 1490 }
 };
 
 const MODEL_URL = 'models/main-shoe.glb';

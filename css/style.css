@@ -243,6 +243,9 @@ section {
 }
 .product-badge.in-stock { background: var(--green); color: #000; }
 .product-badge.low-stock { background: var(--orange); color: #fff; }
+.product-badge.base-badge { background: var(--cyan); color: #000; font-weight: 800; }
+.base-shoe-card { border-color: rgba(0,212,255,0.4) !important; background: linear-gradient(145deg, rgba(0,87,255,0.06), var(--glass)) !important; }
+.base-notice-tag { color: var(--cyan) !important; font-weight: 700 !important; font-size: 0.72rem !important; }
 .wishlist-btn {
   position: absolute; top: 12px; right: 12px;
   width: 36px; height: 36px; border-radius: 50%;
@@ -257,8 +260,6 @@ section {
   letter-spacing: 1.5px; color: var(--cyan); margin-bottom: 6px;
 }
 .product-info h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
-.product-rating { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-bottom: 12px; }
-.product-rating .stars { color: #FFD700; font-size: 0.85rem; }
 .price-row { display: flex; align-items: center; justify-content: space-between; }
 .price { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; }
 .price-old { font-size: 0.85rem; color: rgba(255,255,255,0.3); text-decoration: line-through; margin-left: 8px; }
@@ -268,6 +269,12 @@ section {
   padding: 8px 18px; border-radius: var(--radius-full);
   font-size: 0.8rem; font-weight: 700; transition: transform 0.3s;
 }
+.add-to-cart.btn-base-add {
+  background: linear-gradient(135deg, var(--cyan), var(--primary)) !important;
+  color: #000 !important; font-weight: 800 !important;
+}
+.mini-qty-btn:hover { background: var(--cyan) !important; color: #000 !important; }
+.cart-item-base { border-left: 3px solid var(--cyan) !important; background: rgba(0,212,255,0.03) !important; }
 .add-to-cart:hover { transform: scale(1.05); }
 
 /* ── SHOP PAGE ── */
